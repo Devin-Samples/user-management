@@ -1,0 +1,4 @@
+email,enterprise_role,org_name,org_role
+user1@example.com,account_member,YourOrgName,org_member
+user2@example.com,account_member,YourOrgName,org_admin
+admin@example.com,account_admin,,
