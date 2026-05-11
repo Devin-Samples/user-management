@@ -1,0 +1,7 @@
+org_name,cycle_acu_limit,session_acu_limit,repos
+test/api,,,
+test/_,,,
+api/run,1000,50,usacognition/test-repo
+BulkTest/Alpha,2000,100,usacognition/test-repo
+BulkTest/Beta,3000,150,usacognition/test-repo
+BulkTest/Gamma,1500,75,usacognition/test-repo

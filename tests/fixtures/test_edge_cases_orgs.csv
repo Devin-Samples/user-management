@@ -1,0 +1,6 @@
+org_name,cycle_acu_limit,session_acu_limit,repos
+Engineering/Payments,5000,100,usacognition/test-repo
+BadFormat/Slash/Extra,1000,50,
+NegACU/Test,-500,50,
+ValidOrg/ValidProject,1000,50,not-a-valid-repo
+ValidOrg2/Project2,1000,50,usacognition/test-repo;fake-owner/nonexistent-repo

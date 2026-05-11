@@ -1,0 +1,5 @@
+email,enterprise_role,org_name,org_role
+alice@test.com,invalid_role_xyz,Engineering/Payments,org_member
+bob@test.com,account_member,,org_member
+charlie@test.com,account_member,Engineering/Payments,fake_org_role
+valid@test.com,account_member,Engineering/Payments,org_member
