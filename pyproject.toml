@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "user-management"
+version = "0.1.0"
+description = "Unified tool for managing Devin enterprise users and orgs via CSV or GitHub Teams"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31.0",
+    "python-dotenv>=1.0.0",
+    "openpyxl>=3.1.0",
+    "pyyaml>=6.0",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "responses>=0.23.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+user-management = "user_management.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"user_management.bulk" = ["templates/*.csv"]
+
+[tool.pytest.ini_options]
+markers = [
+    "live: marks tests that require a real API key (deselect with '-m \"not live\"')",
+]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

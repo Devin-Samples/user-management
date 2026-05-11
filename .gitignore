@@ -1,0 +1,43 @@
+# Environment
+.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+build/
+dist/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+.ruff_cache/
+
+# Generated state / results
+results_*.csv
+orgs-current.csv
+users-current.csv
+sync-state.json
+config.yaml
+!examples/config.yaml
+!examples/config-multi-org.yaml
+
+# OS
+.DS_Store
+Thumbs.db
