@@ -1,4 +1,4 @@
-"""Synchronous Devin v3 API client used by both ``bulk`` and ``github_sync``.
+"""Synchronous Devin v3 API client used by the ``bulk`` module.
 
 This is a port of devin-bulk-manager's ``api_client.py`` extended with the
 endpoints github-permissions-devin-sync needed (notably

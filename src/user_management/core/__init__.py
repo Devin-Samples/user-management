@@ -1,10 +1,9 @@
-"""Shared Devin v3 API plumbing used by both ``bulk`` and ``github_sync``."""
+"""Shared Devin v3 API plumbing used by the ``bulk`` module."""
 
 from user_management.core.client import DevinAPIClient
 from user_management.core.config import (
     get_devin_api_base_url,
     get_devin_api_key,
-    get_github_token,
     load_env,
 )
 from user_management.core.errors import (
@@ -26,6 +25,5 @@ __all__ = [
     "ValidationError",
     "get_devin_api_base_url",
     "get_devin_api_key",
-    "get_github_token",
     "load_env",
 ]

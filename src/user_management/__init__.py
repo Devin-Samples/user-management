@@ -1,11 +1,7 @@
-"""user-management — unified Devin enterprise user/org management.
+"""user-management — Devin enterprise user/org management.
 
-Two modules under one CLI:
-
-- :mod:`user_management.bulk` — CSV/XLSX is the source of truth.
-- :mod:`user_management.github_sync` — GitHub Teams are the source of truth.
-
-Both share :mod:`user_management.core` for talking to the Devin v3 API.
+Bulk CSV/XLSX-driven sync under one CLI.  See :mod:`user_management.bulk`.
+:mod:`user_management.core` provides the shared Devin v3 API client.
 """
 
 __version__ = "0.1.0"

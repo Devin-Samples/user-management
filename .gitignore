@@ -34,9 +34,6 @@ results_*.csv
 orgs-current.csv
 users-current.csv
 sync-state.json
-config.yaml
-!examples/config.yaml
-!examples/config-multi-org.yaml
 
 # OS
 .DS_Store

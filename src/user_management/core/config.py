@@ -1,4 +1,4 @@
-"""Env-based configuration helpers shared by both modules.
+"""Env-based configuration helpers.
 
 The Devin API key is read from ``DEVIN_API_KEY`` and supports both ``cog_``
 (enterprise) and ``sk-`` (cloud) prefixes.  The base URL defaults to the
@@ -51,19 +51,3 @@ def get_devin_api_key(*, required: bool = True) -> str:
 def get_devin_api_base_url() -> str:
     """Return ``DEVIN_API_BASE_URL`` from the environment, defaulting to cloud."""
     return os.environ.get("DEVIN_API_BASE_URL", DEFAULT_DEVIN_BASE_URL).rstrip("/")
-
-
-def get_github_token(env_var_name: str = "GITHUB_TOKEN", *, required: bool = True) -> str:
-    """Return a GitHub personal access token from the environment.
-
-    ``env_var_name`` allows pointing at a non-default variable (e.g. when
-    juggling multiple GitHub orgs each with their own PAT).
-    """
-    token = os.environ.get(env_var_name, "").strip()
-    if required and not token:
-        print(
-            f"ERROR: {env_var_name} environment variable is not set.",
-            file=sys.stderr,
-        )
-        sys.exit(1)
-    return token
