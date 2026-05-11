@@ -1,0 +1,77 @@
+# ============================================================================
+# Multi-org config (preferred)
+# ============================================================================
+# List multiple GitHub orgs in a single config file. Each org has its own
+# token, filters, and settings. Shared settings (default_member_role, dry_run)
+# are defined at the top level.
+
+# Shared settings (apply to all orgs)
+default_member_role: "member"
+dry_run: false
+
+github_orgs:
+  - github_org: "Cognizant-insurance-admde"
+    github_token_env_var: "GITHUB_TOKEN_INS2ADMDE"
+    skip_enterprise_teams: true
+    skip_team_patterns:
+      - "enterpriseappsecurityteam"
+    skip_empty_teams: true
+    org_name_template: "{gh_org}-{team_slug}"
+    auto_invite_members: true
+    email_resolution:
+      saml_graphql: true
+      audit_log_invites: true
+      commit_history: false
+      public_profile: true
+      allowed_email_domains:
+        - "cognizant.com"
+
+  # Add more orgs below:
+  # - github_org: "another-org"
+  #   github_token_env_var: "GITHUB_TOKEN_ANOTHER"
+  #   skip_enterprise_teams: true
+  #   org_name_template: "{gh_org}-{team_slug}"
+  #   email_resolution:
+  #     saml_graphql: true
+  #     public_profile: true
+
+# ============================================================================
+# Single-org shorthand (backward compatible)
+# ============================================================================
+# You can also use a flat config with a single github_org instead of the
+# github_orgs list. This is automatically converted to a one-element list.
+#
+# github_org: "my-org"
+# github_token_env_var: "GITHUB_TOKEN"
+# skip_enterprise_teams: true
+# org_name_template: "{gh_org}-{team_slug}"
+# email_resolution:
+#   saml_graphql: true
+#   public_profile: true
+# default_member_role: "member"
+# dry_run: false
+
+# ============================================================================
+# Auto-sync settings (per org)
+# ============================================================================
+# team_filter: list[str]       — only sync these team slugs (empty = all)
+# skip_team_patterns: list[str] — skip teams whose slug contains any substring
+# skip_empty_teams: bool        — skip teams with 0 matched members AND 0 repos
+# skip_enterprise_teams: bool   — skip enterprise-managed teams
+# org_name_template: str        — {gh_org} and {team_slug} are substituted
+# auto_invite_members: bool     — invite unmatched GH users as enterprise members
+# email_resolution:             — control email resolution methods
+
+# ============================================================================
+# Legacy mode (explicit team mappings, per org)
+# ============================================================================
+# When team_mappings is provided inside a github_orgs entry, that org uses
+# legacy mode with explicit team->org mappings.
+#
+# github_orgs:
+#   - github_org: "my-org"
+#     team_mappings:
+#       - github_team_slug: "ecommerce-platform"
+#         devin_org_id: "org-abc123"
+#         sync_members: true
+#         sync_repos: true
