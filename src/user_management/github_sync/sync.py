@@ -500,6 +500,11 @@ def run_auto_sync(
                 "Skipping team '%s' (not in team_filter)", team.slug,
             )
             continue
+        if org_config.skip_enterprise_teams and team.team_type == "secret":
+            logger.info(
+                "Skipping enterprise team '%s'", team.slug,
+            )
+            continue
         if org_config.skip_team_patterns and any(
             pat in team.slug for pat in org_config.skip_team_patterns
         ):

@@ -141,7 +141,7 @@ class GitHubClient:
             try:
                 with httpx.Client(timeout=30.0) as client:
                     resp = client.post(
-                        "https://api.github.com/graphql",
+                        f"{self._base_url}/graphql",
                         headers=self._headers,
                         json={"query": query, "variables": variables},
                     )
