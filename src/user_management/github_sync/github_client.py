@@ -151,10 +151,9 @@ class GitHubClient:
 
             data = resp.json()
             provider = (
-                data.get("data", {})
-                .get("organization", {})
-                .get("samlIdentityProvider")
-            )
+                (data.get("data") or {})
+                .get("organization") or {}
+            ).get("samlIdentityProvider")
             if not provider:
                 logger.debug(
                     "No SAML identity provider found for org %s", org,
