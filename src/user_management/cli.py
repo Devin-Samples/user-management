@@ -4,6 +4,7 @@ Subcommands:
 
 - ``bulk ...``         — CSV/XLSX-driven enterprise sync
 - ``doctor ...``       — diagnostic checks
+- ``github-sync ...``  — GitHub Team → Devin Org sync
 - ``verify``           — alias for ``bulk verify``: prints enterprise state
 
 The dispatcher is intentionally hand-rolled rather than using argparse
@@ -18,6 +19,7 @@ import sys
 from user_management import __version__
 from user_management.bulk import cli as bulk_cli
 from user_management.doctor import cli as doctor_cli
+from user_management.github_sync import cli as github_sync_cli
 
 
 _USAGE = """\
@@ -30,6 +32,8 @@ Modules:
                  See `user-management bulk --help`.
   doctor         Run diagnostic checks (devin-auth).
                  See `user-management doctor --help`.
+  github-sync    Sync GitHub Team membership to Devin orgs.
+                 See `user-management github-sync --help`.
   verify         Alias for `user-management bulk verify` — print enterprise state.
 
 Options:
@@ -61,6 +65,8 @@ def main(argv: list[str] | None = None) -> int:
         return bulk_cli.main(rest)
     if module == "doctor":
         return doctor_cli.main(rest)
+    if module == "github-sync":
+        return github_sync_cli.main(rest)
     if module == "verify":
         return bulk_cli.main(["verify", *rest])
 
