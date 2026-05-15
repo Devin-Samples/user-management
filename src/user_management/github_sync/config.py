@@ -34,9 +34,9 @@ def get_github_token(env_var_name: str = "GITHUB_TOKEN") -> str:
 
 def get_devin_api_token() -> str:
     """Return the Devin API service-user token from the environment."""
-    token = os.environ.get("DEVIN_API_TOKEN", "")
+    token = os.environ.get("DEVIN_API_TOKEN", "") or os.environ.get("DEVIN_API_KEY", "")
     if not token:
-        print("Error: DEVIN_API_TOKEN environment variable is not set.", file=sys.stderr)
+        print("Error: DEVIN_API_TOKEN (or DEVIN_API_KEY) environment variable is not set.", file=sys.stderr)
         sys.exit(1)
     return token
 
