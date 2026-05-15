@@ -264,11 +264,11 @@ src/user_management/github_sync/
 ├── cli.py               # Argparse subcommand for `github-sync`
 ├── config.py            # Environment variable helpers, YAML config loading
 ├── config.yaml.example  # Example configuration file
-├── github_client.py     # Synchronous GitHub REST/GraphQL client (httpx)
+├── github_client.py     # Synchronous GitHub REST/GraphQL client (requests)
 ├── models.py            # Config, GitHub, and sync result pydantic models
 └── sync.py              # Orchestration: discover, reconcile, apply
 ```
 
 All Devin API calls go through `core.client.DevinAPIClient` (synchronous,
 requests-based) following the repository convention.  The GitHub client uses
-`httpx` for its GraphQL and REST interactions.
+`requests` for its GraphQL and REST interactions.

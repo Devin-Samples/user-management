@@ -34,7 +34,9 @@ from user_management.github_sync.config import (
 from user_management.github_sync.github_client import GitHubClient
 from user_management.github_sync.models import (
     GitHubOrgConfig,
+    GitHubRepo,
     GitHubTeam,
+    GitHubUser,
     MemberSyncResult,
     OrgCreateResult,
     RepoSyncResult,
@@ -247,12 +249,17 @@ def sync_members_for_team(
     profile_emails: dict[str, str],
     org_role_id: str,
     dry_run: bool,
+    prefetched_members: Optional[list[GitHubUser]] = None,
 ) -> MemberSyncResult:
     """Sync GitHub team members to a Devin org's members."""
     result = MemberSyncResult(team_slug=team_slug, devin_org_id=org_id)
 
     try:
-        gh_members = github_client.list_team_members(github_org, team_slug)
+        gh_members = (
+            prefetched_members
+            if prefetched_members is not None
+            else github_client.list_team_members(github_org, team_slug)
+        )
         logger.info(
             "[%s] GitHub team has %d members", team_slug, len(gh_members),
         )
@@ -402,6 +409,7 @@ def sync_repos_for_team(
     github_org: str,
     git_connection: DevinGitConnection,
     dry_run: bool,
+    prefetched_repos: Optional[list[GitHubRepo]] = None,
 ) -> RepoSyncResult:
     """Sync GitHub team repos to Devin org git permissions."""
     result = RepoSyncResult(
@@ -411,7 +419,11 @@ def sync_repos_for_team(
     )
 
     try:
-        gh_repos = github_client.list_team_repos(github_org, team_slug)
+        gh_repos = (
+            prefetched_repos
+            if prefetched_repos is not None
+            else github_client.list_team_repos(github_org, team_slug)
+        )
         logger.info(
             "[%s] GitHub team has access to %d repos",
             team_slug, len(gh_repos),
@@ -937,6 +949,7 @@ def run_auto_sync(
                 profile_emails=profile_emails,
                 org_role_id=org_member_role_id,
                 dry_run=dry_run,
+                prefetched_members=team_gh_members.get(team.slug),
             )
             summary.member_results.append(member_result)
 
@@ -949,6 +962,7 @@ def run_auto_sync(
                 github_org=org_config.github_org,
                 git_connection=git_connection,
                 dry_run=dry_run,
+                prefetched_repos=team_gh_repos.get(team.slug),
             )
             summary.repo_results.append(repo_result)
         else:

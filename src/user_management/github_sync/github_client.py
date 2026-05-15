@@ -5,7 +5,7 @@ from __future__ import annotations
 import logging
 from typing import Optional
 
-import httpx
+import requests
 
 from user_management.github_sync.models import GitHubRepo, GitHubTeam, GitHubUser
 
@@ -21,11 +21,12 @@ class GitHubClient:
     def __init__(self, token: str, base_url: str = GITHUB_API_BASE) -> None:
         self._token = token
         self._base_url = base_url.rstrip("/")
-        self._headers = {
+        self._session = requests.Session()
+        self._session.headers.update({
             "Accept": "application/vnd.github+json",
             "Authorization": f"Bearer {token}",
             "X-GitHub-Api-Version": "2022-11-28",
-        }
+        })
 
     # ------------------------------------------------------------------
     # Team discovery
@@ -98,9 +99,8 @@ class GitHubClient:
         """Fetch the public email from a GitHub user's profile."""
         url = f"{self._base_url}/users/{login}"
         try:
-            with httpx.Client(timeout=30.0) as client:
-                resp = client.get(url, headers=self._headers)
-                resp.raise_for_status()
+            resp = self._session.get(url, timeout=30.0)
+            resp.raise_for_status()
             data = resp.json()
             return data.get("email") or None
         except Exception as exc:
@@ -139,13 +139,12 @@ class GitHubClient:
                 variables["cursor"] = cursor
 
             try:
-                with httpx.Client(timeout=30.0) as client:
-                    resp = client.post(
-                        f"{self._base_url}/graphql",
-                        headers=self._headers,
-                        json={"query": query, "variables": variables},
-                    )
-                    resp.raise_for_status()
+                resp = self._session.post(
+                    f"{self._base_url}/graphql",
+                    json={"query": query, "variables": variables},
+                    timeout=30.0,
+                )
+                resp.raise_for_status()
             except Exception as exc:
                 logger.warning("GraphQL SAML query failed: %s", exc)
                 break
@@ -239,11 +238,10 @@ class GitHubClient:
         next_url: Optional[str] = url
 
         while next_url is not None:
-            with httpx.Client(timeout=30.0) as client:
-                resp = client.get(
-                    next_url, headers=self._headers, params=params,
-                )
-                resp.raise_for_status()
+            resp = self._session.get(
+                next_url, params=params, timeout=30.0,
+            )
+            resp.raise_for_status()
 
             data = resp.json()
             if not data:
