@@ -51,6 +51,31 @@ REST/GraphQL APIs to keep team membership and repository access in sync.
 
 ---
 
+## Prerequisites
+
+### GitHub PAT
+
+Create a **classic** Personal Access Token at
+[github.com/settings/tokens/new](https://github.com/settings/tokens/new).
+
+| Scope | Required? | Used for |
+|-------|-----------|----------|
+| `read:org` | **Yes** | List teams, members, and team repos |
+| `repo` | Only if syncing private repos | Include private repos in team repo listings |
+| `admin:org` | Only for SAML/audit-log email resolution | Query SAML identities (GraphQL) and audit log invite emails |
+
+If your org uses SAML SSO, you must also **authorize the PAT for your SSO
+organization** after creation — click "Configure SSO" next to the token on
+your [tokens page](https://github.com/settings/tokens).
+
+### Devin API Token
+
+A Devin enterprise service-user API key with admin permissions. Set as the
+`DEVIN_API_TOKEN` environment variable (or `DEVIN_ENTERPRISE_ADMIN_TOKEN` org
+secret when running inside Devin).
+
+---
+
 ## Detailed Process Flow
 
 ### Phase 1: Discovery (read-only)
@@ -58,7 +83,7 @@ REST/GraphQL APIs to keep team membership and repository access in sync.
 #### 1a. Fetch GitHub state
 
 ```
-GitHub REST API (using GITHUB_TOKEN with read:org scope):
+GitHub REST API (using GITHUB_TOKEN):
 ├── GET /orgs/{gh_org}/teams?per_page=100
 │   → List of all teams: [{slug, name, id, ...}, ...]
 │

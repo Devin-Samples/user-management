@@ -59,7 +59,23 @@ membership and repository access to Devin organizations.
 | Secret | Description |
 |--------|-------------|
 | `DEVIN_API_TOKEN` | Devin enterprise service-user API key |
-| `GITHUB_TOKEN_<ORG>` | GitHub PAT per org (`read:org`; `admin:org` for SAML/audit-log) |
+| `GITHUB_TOKEN_<ORG>` | GitHub PAT per org (see scope table below) |
+
+#### GitHub PAT scopes
+
+Create a **classic** Personal Access Token at
+[github.com/settings/tokens/new](https://github.com/settings/tokens/new)
+with the following scopes:
+
+| Scope | Required? | Used for |
+|-------|-----------|----------|
+| `read:org` | **Yes** | List teams, members, and team repos |
+| `repo` | Only if syncing private repos | Include private repos in team repo listings |
+| `admin:org` | Only for SAML/audit-log email resolution | Query SAML identities (GraphQL) and audit log invite emails |
+
+> **Tip:** If your org uses SAML SSO, you must also **authorize the PAT for
+> your SSO organization** after creation — click "Configure SSO" next to the
+> token on your [tokens page](https://github.com/settings/tokens).
 
 ### 2. Create a config file
 
