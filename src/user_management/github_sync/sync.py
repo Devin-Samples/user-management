@@ -673,6 +673,11 @@ def run_auto_sync(
                 if not _is_numeric_email(ae):
                     real_email = ae
 
+            if real_email and allowed_domains:
+                domain = real_email.rsplit("@", 1)[-1]
+                if domain not in allowed_domains:
+                    real_email = None
+
             if not real_email:
                 continue
 
