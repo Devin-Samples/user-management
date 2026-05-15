@@ -1,0 +1,73 @@
+# GitHub Team → Devin Org Sync Configuration
+# ============================================
+#
+# Copy this file to config.yaml and edit the values below.
+#
+# Environment variables required:
+#   DEVIN_API_TOKEN  — Devin enterprise service-user API key
+#   GITHUB_TOKEN_*   — one PAT per GitHub org (see github_token_env_var)
+
+# Shared settings (apply to all orgs)
+default_member_role: "member"
+dry_run: false
+
+github_orgs:
+  - github_org: "my-github-org"
+    github_token_env_var: "GITHUB_TOKEN_MY_ORG"
+
+    # Skip GitHub Enterprise-managed teams (usually not useful for sync)
+    skip_enterprise_teams: true
+
+    # Skip teams whose slug contains any of these substrings
+    skip_team_patterns:
+      - "security-team"
+
+    # Skip teams that have zero matched Devin users and zero repos
+    skip_empty_teams: true
+
+    # Template for Devin org names created by auto-sync.
+    # Available placeholders: {gh_org}, {team_slug}
+    org_name_template: "{gh_org}-{team_slug}"
+
+    # Automatically invite unmatched GitHub users to the Devin enterprise
+    # when a valid email is found and the domain is in allowed_email_domains.
+    auto_invite_members: true
+
+    # Email resolution methods (all enabled by default)
+    email_resolution:
+      saml_graphql: true           # Requires admin:org PAT scope + SAML configured
+      audit_log_invites: true      # Requires admin:org PAT scope
+      commit_history: false        # Slow — disabled by default
+      public_profile: true         # Uses public GitHub profile email
+
+      # Only emails from these domains are used for matching/inviting.
+      # Leave empty to allow all domains.
+      allowed_email_domains:
+        - "example.com"
+
+  # Add more GitHub orgs as needed:
+  # - github_org: "another-org"
+  #   github_token_env_var: "GITHUB_TOKEN_ANOTHER"
+  #   skip_enterprise_teams: true
+  #   skip_empty_teams: true
+  #   org_name_template: "{gh_org}-{team_slug}"
+  #   auto_invite_members: false
+  #   email_resolution:
+  #     saml_graphql: false
+  #     audit_log_invites: false
+  #     commit_history: false
+  #     public_profile: true
+  #     allowed_email_domains:
+  #       - "another-domain.com"
+
+# -------------------------------------------------------------------
+# Legacy mode (explicit team mappings — use this if you already have
+# Devin orgs and want to map specific GitHub teams to them):
+#
+# github_org: "my-github-org"
+# team_mappings:
+#   - github_team_slug: "backend-team"
+#     devin_org_id: "org-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+#     sync_members: true
+#     sync_repos: true
+# -------------------------------------------------------------------

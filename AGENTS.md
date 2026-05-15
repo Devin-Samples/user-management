@@ -32,12 +32,14 @@ ruff check src tests
 user-management --help
 user-management verify          # requires DEVIN_API_KEY
 user-management doctor          # requires DEVIN_API_KEY
+user-management github-sync --help
 ```
 
 ## Layout
 
 - `src/user_management/core/` — shared sync Devin v3 API client + pydantic models + errors
 - `src/user_management/bulk/` — CSV/XLSX-driven enterprise sync (ported from devin-bulk-manager)
+- `src/user_management/github_sync/` — GitHub Team → Devin Org sync
 - `src/user_management/doctor/` — diagnostic checks (Devin auth)
 - `src/user_management/cli.py` — top-level argparse dispatcher
 

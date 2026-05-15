@@ -34,6 +34,7 @@ results_*.csv
 orgs-current.csv
 users-current.csv
 sync-state.json
+config.yaml
 
 # OS
 .DS_Store
