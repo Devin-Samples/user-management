@@ -78,6 +78,10 @@ user-management github-sync --config config.yaml --dry-run --verbose
 user-management github-sync --config config.yaml --verbose
 ```
 
+> **Security:** The state file (`sync-state.json`) contains Devin org IDs and
+> team mappings. If you commit and push the state file, ensure your repository
+> is **private** before doing so.
+
 For full details, architecture, and the Devin agent skill, see
 [docs/github-team-sync.md](docs/github-team-sync.md).
 

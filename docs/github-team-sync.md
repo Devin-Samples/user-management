@@ -182,6 +182,10 @@ The state file provides **rename safety**: if someone renames a Devin org in
 the UI, the state file's `org_id` still maps correctly, preventing duplicate
 org creation.
 
+> **Security:** The state file contains Devin org IDs and team mappings.
+> If you commit and push the state file back to your repository, ensure the
+> repository is **private** before doing so.
+
 ---
 
 ## Configuration

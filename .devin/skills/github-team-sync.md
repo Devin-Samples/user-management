@@ -64,7 +64,8 @@ The following **org-level secrets** must be configured in Devin before running:
    - **Undo instructions**: Provide API calls to reverse any changes
 
 6. **Commit the updated state file** if it changed (new orgs created or
-   org names updated).
+   org names updated). **Important:** The state file contains Devin org IDs
+   and team mappings. Ensure the repository is **private** before pushing.
 
 ## Secrets Needed
 
